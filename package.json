@@ -2,11 +2,13 @@
   "name": "piquante-backend",
   "version": "1.0.0",
   "description": "This is the backend part of the Piquante app.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
+    "api",
+    "node",
     "backend",
     "express",
     "mongodb",
@@ -18,5 +20,8 @@
   },
   "author": "CCR-G",
   "license": "ISC",
-  "homepage": "https://github.com/CCR-G/6_14032021#readme"
+  "homepage": "https://github.com/CCR-G/6_14032021#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
