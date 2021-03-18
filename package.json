@@ -23,6 +23,7 @@
   "homepage": "https://github.com/CCR-G/6_14032021#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.12.0"
+    "mongoose": "^5.12.0",
+    "mongoose-unique-validator": "^2.0.3"
   }
 }
