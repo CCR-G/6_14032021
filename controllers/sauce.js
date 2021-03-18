@@ -1,3 +1,5 @@
+const Sauce = require('../models/sauce');
+
 exports.create = (req, res, next) => {
 };
 
