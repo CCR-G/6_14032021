@@ -20,11 +20,26 @@ exports.getOne = (req, res) => {
 };
 
 exports.modify = (req, res) => {
-    const sauceObject = req.file ?
-        {
-            ...JSON.parse(req.body.sauce),
-            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        } : { ...req.body };
+    if (!req.file) {
+        updateSauce(req, res, req.body);
+        return;
+    }
+
+    const sauceObject = {
+        ...JSON.parse(req.body.sauce),
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    }
+    Sauce.findOne({ _id: req.params.id })
+        .then(sauce => {
+            const filename = sauce.imageUrl.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
+                updateSauce(req, res, sauceObject);
+            });
+        })
+        .catch(error => res.status(500).json({ error }));
+};
+
+function updateSauce(req, res, sauceObject) {
     Sauce.updateOne(
         { _id: req.params.id },
         { ...sauceObject, _id: req.params.id }
