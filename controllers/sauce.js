@@ -1,7 +1,7 @@
 const Sauce = require('../models/sauce');
 const fs = require('fs');
 
-exports.create = (req, res, next) => {
+exports.create = (req, res) => {
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
     const sauce = new Sauce({
@@ -13,13 +13,13 @@ exports.create = (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.getOne = (req, res, next) => {
+exports.getOne = (req, res) => {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => res.status(200).json(sauce))
         .catch(error => res.status(404).json({ error }));
 };
 
-exports.modify = (req, res, next) => {
+exports.modify = (req, res) => {
     const sauceObject = req.file ?
         {
             ...JSON.parse(req.body.sauce),
@@ -33,7 +33,7 @@ exports.modify = (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.like = (req, res, next) => {
+exports.like = (req, res) => {
     const like = req.body.like;
     const userId = req.body.userId;
 
@@ -65,7 +65,7 @@ exports.like = (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.delete = (req, res, next) => {
+exports.delete = (req, res) => {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
             const filename = sauce.imageUrl.split('/images/')[1];
@@ -78,7 +78,7 @@ exports.delete = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-exports.getAll = (req, res, next) => {
+exports.getAll = (req, res) => {
     Sauce.find()
         .then(sauces => res.status(200).json(sauces))
         .catch(error => res.status(400).json({ error }));
