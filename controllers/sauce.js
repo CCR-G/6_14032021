@@ -34,6 +34,35 @@ exports.modify = (req, res, next) => {
 };
 
 exports.like = (req, res, next) => {
+    const like = req.body.like;
+    const userId = req.body.userId;
+
+    let push_query = {};
+    let pull_query = {};
+
+    switch (like) {
+        case -1:
+            push_query = { usersDisliked: userId };
+            pull_query = { usersLiked: userId };
+            break;
+        case 0:
+            pull_query = { usersLiked: userId, usersDisliked: userId };
+            break;
+        case 1:
+            push_query = { usersLiked: userId };
+            pull_query = { usersDisliked: userId };
+            break;
+        default:
+            throw new Error("like should be either 1, 0 or -1");
+    }
+
+    Sauce.updateOne({ _id: req.params.id }, {
+        _id: req.params.id,
+        $push: push_query,
+        $pull: pull_query,
+    })
+        .then(() => res.status(200).json({ message: 'Likes et dislikes des sauces mis à jour !' }))
+        .catch(error => res.status(400).json({ error }));
 };
 
 exports.delete = (req, res, next) => {

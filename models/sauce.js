@@ -8,10 +8,11 @@ const sauceSchema = mongoose.Schema({
     mainPepper: { type: String, required: true },
     imageUrl: { type: String, required: true },
     heat: { type: Number, required: true },
-    likes: { type: Number, required: false },
-    dislikes: { type: Number, required: false },
-    usersLiked: { type: [String], required: false },
-    usersDisliked: { type: [String], required: false }
-});
+    usersLiked: { type: [this.userId], required: true },
+    usersDisliked: { type: [this.userId], required: true }
+}, { toJSON: { virtuals: true } });
+
+sauceSchema.virtual('likes').get(function () { return this.usersLiked.length });
+sauceSchema.virtual('dislikes').get(function () { return this.usersDisliked.length })
 
 module.exports = mongoose.model('Sauce', sauceSchema);
