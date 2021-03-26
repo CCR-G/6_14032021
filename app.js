@@ -7,7 +7,7 @@ const saucesRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
 const app = express();
-mongoose.connect('mongodb+srv://CCR:NtFyj0GHgIKT4kAg@piquantecluster.s3txu.mongodb.net/piquanteDatabase?retryWrites=true&w=majority',
+mongoose.connect(process.env.DB_LINK,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
