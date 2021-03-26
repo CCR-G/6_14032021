@@ -11,7 +11,6 @@ Secure customer data by applying the OWASP web security standards.
 ## How to test
 ### Backend
 1. Clone this repo and run `npm install`
-1. Make sure you have a `images` folder created in the project
 1. Have a running MongoDB
 1. Create an `.env` file in the main folder with a `DB_LINK` environment variable set to your MongoDB "Connection string"
 1. Run `npm run build`
