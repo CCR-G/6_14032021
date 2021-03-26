@@ -3,7 +3,13 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res) => {
-    createSecureUser(req.body.email, req.body.password)
+    const user_email = req.body.email;
+    user_email = user_email.toLowerCase();
+    if (!isEmailValid(user_email)) {
+        return res.status(400).send({ message: "Email is invalid" })
+    }
+
+    createSecureUser(user_email, req.body.password)
         .then(user => {
             user.save()
                 .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
@@ -20,8 +26,14 @@ async function createSecureUser(email, password, salt = 10) {
     });
 }
 
+function isEmailValid(email) {
+    const mail_regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    return mail_regex.test(email);
+}
+
 exports.login = (req, res) => {
-    User.findOne({ email: req.body.email })
+    const user_email = req.body.email;
+    User.findOne({ email: user_email.toLowerCase() })
         .then(user => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé !' });
