@@ -12,7 +12,9 @@ Secure customer data by applying the OWASP web security standards.
 ### Backend
 1. Clone this repo and run `npm install`
 1. Have a running MongoDB
-1. Create an `.env` file in the main folder with a `DB_LINK` environment variable set to your MongoDB "Connection string"
+1. Create an environment variables `.env` file in the main folder
+    * Set `DB_LINK` to your MongoDB "Connection string"
+    * Set `TOKEN_SECRET_KEY` to a token secret key
 1. Run `npm run build`
 
 ### Frontend
