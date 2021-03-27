@@ -1,4 +1,5 @@
 const Sauce = require('../../models/sauce');
+const fs = require('fs');
 
 module.exports = {
     updateSauce: (req, res, sauceObject) => {
@@ -8,6 +9,11 @@ module.exports = {
         )
             .then(() => res.status(200).json({ message: 'Sauce modifiée !' }))
             .catch(error => res.status(400).json({ error }));
+    },
+
+    deleteFile: (image_url, callback) => {
+        const filename = image_url.split('/images/')[1];
+        fs.unlink(`images/${filename}`, callback);
     },
 
     getUpdateQueries: (user_id, like) => {
