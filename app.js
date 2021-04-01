@@ -1,5 +1,7 @@
 const express = require('express');
+const helmet = require("helmet");
 const bodyParser = require('body-parser');
+const mongoSanitize = require('express-mongo-sanitize');
 const mongoose = require('mongoose');
 const path = require('path');
 
@@ -7,6 +9,8 @@ const saucesRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
 const app = express();
+app.use(helmet());
+
 mongoose.connect(process.env.DB_LINK,
     {
         useNewUrlParser: true,
@@ -23,6 +27,7 @@ app.use((req, res, next) => {
 });
 
 app.use(bodyParser.json());
+app.use(mongoSanitize());
 
 app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth', userRoutes);
