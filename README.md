@@ -10,11 +10,9 @@ Secure customer data by applying the OWASP web security standards.
 
 ## How to test
 ### Backend
+1. Given you have a running MongoDB
 1. Clone this repo and run `npm install`
-1. Have a running MongoDB
-1. Create an environment variables `.env` file in the main folder
-    * Set `DB_LINK` to your MongoDB "Connection string"
-    * Set `TOKEN_SECRET_KEY` to a token secret key
+1. Set the environment variables in an `.env` file following the example of the `.env.template` file.
 1. Run `npm run build`
 
 ### Frontend
