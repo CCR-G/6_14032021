@@ -13,12 +13,22 @@ const storage = multer.diskStorage({
     filename: (req, file, callback) => {
         const name = file.originalname.split(' ').join('_');
         const extension = MIME_TYPES[file.mimetype];
-        if (!extension) {
-            callback(new Error('Only images are allowed'), false);
-            return;
-        }
         callback(null, name + Date.now() + '.' + extension);
     }
 });
 
-module.exports = multer({ storage: storage }).single('image');
+const filter = (req, file, callback) => {
+    if (!MIME_TYPES[file.mimetype]) {
+        callback(new Error('Only images are allowed'), false);
+        return;
+    }
+    callback(null, true);
+};
+
+const multer_options = {
+    storage: storage,
+    limits: { fileSize: 100000 },
+    fileFilter: filter,
+};
+
+module.exports = multer(multer_options).single('image');
